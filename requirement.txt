@@ -1,0 +1,3 @@
+uvicorn
+beautifulsoup4
+fastapi

@@ -62,8 +62,8 @@ def get_test(target_id):
     return int(real_lv)
 
 
-# if __name__ == "__main__":
-#   #run command = uvicorn main:app --reload --port=4557
-#   uvicorn.run(app, host='0.0.0.0', port=4557)
+if __name__ == "__main__":
+  #run command = uvicorn main:app --reload --port=4557
+  uvicorn.run(app, host='0.0.0.0', port=4557)
 
 

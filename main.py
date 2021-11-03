@@ -24,11 +24,10 @@ class Item(BaseModel):
   content: dict
 
 
-#@app.get("/charname")
-#def get_char_data():
-  #get_all_data = redis_helper.get_all_data()
-  #print("get_all_data : ", get_all_data)
-  #return None
+@app.get("/charname")
+def get_char_data():
+  get_all_data = redis_helper.get_all_data()
+  return get_all_data
 
 
 @app.get("/chardata/{target_id}")

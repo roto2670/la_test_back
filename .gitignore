@@ -16,6 +16,7 @@ xunit.xml
 .venv/
 .test/
 _t/
+.Redis/
 *.db
 __pycache__
 backup_db

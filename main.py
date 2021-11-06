@@ -3,10 +3,14 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
-from constants import SERVER_PORT
+from constants import SERVER_PORT, IV, ENC_KEY
 import api_func
 import redis_helper
 
+# legacy import blco {{{
+from Crypto.Cipher import AES
+import base64
+# }}}
 
 # FAST API config {{{
 app = FastAPI()
@@ -37,11 +41,33 @@ def get_char_data(target_id):
 
 
 @app.post("/taskdata")
-def put_test(pul_data: Item):
-  req_data = pul_data.content
-  redis_helper.set_data(req_data['char_name'], req_data['task'])
-  return True
+def set_task_data(post_data: Item):
+  task_data = post_data.content
+  ret = api_func.set_task_data(task_data)
+  return ret
 
+
+@app.post("/join")
+def put_test(post_data: Item):
+  join_data = post_data.content
+  data_exist = api_func.check_user(join_data['id'])
+  if data_exist:
+    ret = "data exist"
+  else:
+    join_result = api_func.join_user(join_data)
+    if join_result:
+      ret = "join success"
+    else:
+      ret = "join fail"
+  return ret
+
+# legacy def block {{{
+
+# def decrypt(encrypted):
+#   aes = AES.new(ENC_KEY, AES.MODE_CBC, IV)
+#   return aes.decrypt(base64.b64decode(encrypted))
+
+#}}}
 
 if __name__ == "__main__":
   #run command = uvicorn main:app --reload --port=4557

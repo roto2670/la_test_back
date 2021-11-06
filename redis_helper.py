@@ -58,7 +58,8 @@ class RedisStore(object):
 DATA = RedisStore(REDIS_HOST, REDIS_PORT, PROFILE_REDIS_DB)
 
 # table name
-__DATA__ = '''__DATA__'''
+__LOGIN_DATA__ = '''__LOGIN_DATA__'''
+__TASK_DATA__ = '''__TASK_DATA__'''
 
 # common
 #def del_data(name):
@@ -66,23 +67,36 @@ __DATA__ = '''__DATA__'''
 #  return True
 
 
-# profile block
+# login data block {{{
+def set_join_data(key, value):
+  ret = DATA.set_data(__LOGIN_DATA__, key, value)
+  return ret
+
+
+def get_join_data(key):
+  ret = DATA.has_data(__LOGIN_DATA__, key)
+  return ret
+
+#}}}
+
+# task data block {{{
 def set_data(key, value):
-  DATA.set_data(__DATA__, key, value)
-  return True
+  ret = DATA.set_data(__TASK_DATA__, key, value)
+  return ret
 
 
 def get_data(key):
-  ret = DATA.get_data(__DATA__, key)
+  ret = DATA.get_data(__TASK_DATA__, key)
   return ret
 
 
 def get_all_data():
-  ret = DATA.get_all(__DATA__)
+  ret = DATA.get_all(__TASK_DATA__)
   return ret
 
 
 def data_exist(key):
-  data = DATA.get_data(__DATA__, key)
+  data = DATA.get_data(__TASK_DATA__, key)
   ret = True if data else False
   return ret
+# }}}

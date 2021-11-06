@@ -8,6 +8,11 @@ from constants import CHAR_SEARCH_URL, TASK_DATA_FORM
 import redis_helper
 
 
+def set_task_data(task_data):
+  ret = redis_helper.set_data(task_data['char_name'], task_data['task'])
+  return ret
+
+
 def _chk_data_exist(target_id):
   data_exist = redis_helper.data_exist(target_id)
   return data_exist
@@ -53,3 +58,14 @@ def search_char_data(target_id):
     ret['char_list'] = test_list
     ret['task_data'] = task_data
     return ret
+
+
+def join_user(join_data):
+  _id = join_data['id']
+  ret = redis_helper.set_join_data(_id, join_data)
+  return ret
+
+
+def check_user(_id):
+  ret = redis_helper.get_join_data(_id)
+  return ret

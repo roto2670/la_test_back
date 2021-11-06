@@ -21,3 +21,8 @@ TASK_DATA_FORM = {
     "401": False,
     "501": False,
 }
+
+
+#encrypt / decrypt
+IV = "aaaaaaaaaabbbbbb".encode('utf-8')
+ENC_KEY = "aaaaaaaaaabbbbbb".encode('utf-8')

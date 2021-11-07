@@ -73,6 +73,11 @@ def set_join_data(key, value):
   return ret
 
 
+def get_login_data(key):
+  ret = DATA.get_data(__LOGIN_DATA__, key)
+  return ret
+
+
 def get_join_data(key):
   ret = DATA.has_data(__LOGIN_DATA__, key)
   return ret

@@ -26,3 +26,12 @@ TASK_DATA_FORM = {
 #encrypt / decrypt
 IV = "aaaaaaaaaabbbbbb".encode('utf-8')
 ENC_KEY = "aaaaaaaaaabbbbbb".encode('utf-8')
+
+#response code
+DATA_EXIST = '''data exist'''
+JOIN_SUCCESS = '''join success'''
+JOIN_FAIL = '''join fail'''
+
+LOGIN_OK = '''login ok'''
+NO_ID = '''no id'''
+NO_PW = '''no pw'''

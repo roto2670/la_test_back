@@ -4,7 +4,8 @@ from bs4.element import NavigableString
 import urllib.parse
 import json
 
-from constants import CHAR_SEARCH_URL, TASK_DATA_FORM
+from constants import CHAR_SEARCH_URL, TASK_DATA_FORM, DATA_EXIST, JOIN_SUCCESS
+from constants import JOIN_FAIL, LOGIN_OK, NO_ID, NO_PW
 import redis_helper
 
 
@@ -68,4 +69,29 @@ def join_user(join_data):
 
 def check_user(_id):
   ret = redis_helper.get_join_data(_id)
+  return ret
+
+
+def join_account(join_data):
+  data_exist = check_user(join_data['id'])
+  if data_exist:
+    ret = DATA_EXIST
+  else:
+    join_result = join_user(join_data)
+    if join_result:
+      ret = JOIN_SUCCESS
+    else:
+      ret = JOIN_FAIL
+  return ret
+
+
+def login_user(login_data):
+  exist_data = redis_helper.get_login_data(login_data['id'])
+  if exist_data:
+    if exist_data['pw'] == login_data['pw']:
+      ret = LOGIN_OK
+    else:
+      ret = NO_PW
+  else:
+    ret = NO_ID
   return ret

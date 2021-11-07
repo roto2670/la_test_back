@@ -48,18 +48,18 @@ def set_task_data(post_data: Item):
 
 
 @app.post("/join")
-def put_test(post_data: Item):
+def join_account(post_data: Item):
   join_data = post_data.content
-  data_exist = api_func.check_user(join_data['id'])
-  if data_exist:
-    ret = "data exist"
-  else:
-    join_result = api_func.join_user(join_data)
-    if join_result:
-      ret = "join success"
-    else:
-      ret = "join fail"
+  ret = api_func.join_account(join_data)
   return ret
+
+
+@app.post("/login")
+def login(post_data: Item):
+  login_data = post_data.content
+  ret = api_func.login_user(login_data)
+  return ret
+
 
 # legacy def block {{{
 

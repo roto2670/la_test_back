@@ -10,20 +10,23 @@ import redis_helper
 
 
 def set_task_data(task_data):
-  ret = redis_helper.set_data(task_data['char_name'], task_data['task'])
+  login_id = task_data['login_id']
+  char_name = task_data['char_name']
+  task = task_data['task']
+  ret = redis_helper.set_task_data(login_id, char_name, task)
   return ret
 
 
-def _chk_data_exist(target_id):
-  data_exist = redis_helper.data_exist(target_id)
+def _chk_data_exist(login_id, char_id):
+  data_exist = redis_helper.data_exist(login_id, char_id)
   return data_exist
 
 
-def search_char_data(target_id):
+def search_char_data(login_id, char_id):
   ret = {}
   real_lv = None
   task_data = {}
-  _target_id = urllib.parse.quote_plus(target_id)
+  _target_id = urllib.parse.quote_plus(char_id)
   url = urlopen(CHAR_SEARCH_URL +_target_id)
   page_data = BeautifulSoup(url, "html.parser")
   attention = page_data.main.find("div", {"class": "profile-attention"})
@@ -48,12 +51,12 @@ def search_char_data(target_id):
         char_name = char_name[:-1]
         test_list.append(char_name)
 
-    data_exist = _chk_data_exist(target_id)
+    data_exist = _chk_data_exist(login_id, char_id)
     if data_exist:
-      task_data = redis_helper.get_data(target_id)
+      task_data = redis_helper.get_task_data(login_id, char_id)
     else:
       task_data = TASK_DATA_FORM
-      redis_helper.set_data(target_id, task_data)
+      redis_helper.set_task_data(login_id, char_id, task_data)
 
     ret['lv'] = real_lv
     ret['char_list'] = test_list

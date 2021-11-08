@@ -16,7 +16,7 @@ import logging
 import redis
 
 from constants import REDIS_HOST, REDIS_PORT
-from constants import PROFILE_REDIS_DB
+from constants import LOGIN_REDIS_DB, TASK_REDIS_DB
 
 
 class RedisStore(object):
@@ -55,7 +55,8 @@ class RedisStore(object):
     return ret
 
 # crate redis db
-DATA = RedisStore(REDIS_HOST, REDIS_PORT, PROFILE_REDIS_DB)
+TASK_DATA = RedisStore(REDIS_HOST, REDIS_PORT, TASK_REDIS_DB)
+LOGIN_DATA = RedisStore(REDIS_HOST, REDIS_PORT, LOGIN_REDIS_DB)
 
 # table name
 __LOGIN_DATA__ = '''__LOGIN_DATA__'''
@@ -69,39 +70,39 @@ __TASK_DATA__ = '''__TASK_DATA__'''
 
 # login data block {{{
 def set_join_data(key, value):
-  ret = DATA.set_data(__LOGIN_DATA__, key, value)
+  ret = LOGIN_DATA.set_data(__LOGIN_DATA__, key, value)
   return ret
 
 
 def get_login_data(key):
-  ret = DATA.get_data(__LOGIN_DATA__, key)
+  ret = LOGIN_DATA.get_data(__LOGIN_DATA__, key)
   return ret
 
 
 def get_join_data(key):
-  ret = DATA.has_data(__LOGIN_DATA__, key)
+  ret = LOGIN_DATA.has_data(__LOGIN_DATA__, key)
   return ret
 
 #}}}
 
 # task data block {{{
-def set_data(key, value):
-  ret = DATA.set_data(__TASK_DATA__, key, value)
+def set_task_data(login_id, char_name, task):
+  ret = TASK_DATA.set_data(login_id, char_name, task)
   return ret
 
 
-def get_data(key):
-  ret = DATA.get_data(__TASK_DATA__, key)
+def get_task_data(login_id, char_id):
+  ret = TASK_DATA.get_data(login_id, char_id)
   return ret
 
 
 def get_all_data():
-  ret = DATA.get_all(__TASK_DATA__)
+  ret = TASK_DATA.get_all(__TASK_DATA__)
   return ret
 
 
-def data_exist(key):
-  data = DATA.get_data(__TASK_DATA__, key)
+def data_exist(login_id, char_id):
+  data = TASK_DATA.get_data(login_id, char_id)
   ret = True if data else False
   return ret
 # }}}

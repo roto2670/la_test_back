@@ -34,9 +34,9 @@ def get_char_data():
   return get_all_data
 
 
-@app.get("/chardata/{target_id}")
-def get_char_data(target_id):
-  ret = api_func.search_char_data(target_id)
+@app.get("/chardata/{login_id}/{target_id}")
+def get_char_data(login_id, target_id):
+  ret = api_func.search_char_data(login_id, target_id)
   return ret
 
 

@@ -10,7 +10,9 @@ CHAR_SEARCH_URL = '''https://lostark.game.onstove.com/Profile/Character/'''
 # REDIS
 REDIS_HOST = '''127.0.0.1'''
 REDIS_PORT = 6379
-PROFILE_REDIS_DB = 1
+LOGIN_REDIS_DB = 1
+TASK_REDIS_DB = 2
+LOGIN_ACT_REDIS_DB = 3
 
 TASK_DATA_FORM = {
     "201": False,

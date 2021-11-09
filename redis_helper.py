@@ -54,6 +54,9 @@ class RedisStore(object):
     ret = {k.decode("utf-8"): json.loads(v.decode("utf-8")) for k, v in datas.items()}
     return ret
 
+  def flush(self):
+    self.store.flushdb()
+
 # crate redis db
 TASK_DATA = RedisStore(REDIS_HOST, REDIS_PORT, TASK_REDIS_DB)
 LOGIN_DATA = RedisStore(REDIS_HOST, REDIS_PORT, LOGIN_REDIS_DB)
@@ -105,4 +108,9 @@ def data_exist(login_id, char_id):
   data = TASK_DATA.get_data(login_id, char_id)
   ret = True if data else False
   return ret
+
+
+def reset_task_db():
+  TASK_DATA.flush()
+
 # }}}

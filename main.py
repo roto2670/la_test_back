@@ -6,6 +6,8 @@ import uvicorn
 from constants import SERVER_PORT, IV, ENC_KEY
 import api_func
 import redis_helper
+import sched
+import datetime
 
 # legacy import blco {{{
 from Crypto.Cipher import AES
@@ -61,6 +63,11 @@ def login(post_data: Item):
   return ret
 
 
+def main():
+  sched.start()
+  uvicorn.run(app, host='0.0.0.0', port=SERVER_PORT)
+
+
 # legacy def block {{{
 
 # def decrypt(encrypted):
@@ -71,6 +78,6 @@ def login(post_data: Item):
 
 if __name__ == "__main__":
   #run command = uvicorn main:app --reload --port=4557
-  uvicorn.run(app, host='0.0.0.0', port=SERVER_PORT)
-
+  # uvicorn.run(app, host='0.0.0.0', port=SERVER_PORT)
+  main()
 
